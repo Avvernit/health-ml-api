@@ -3,19 +3,18 @@ from flask_cors import CORS
 import joblib
 import pandas as pd
 
-# Load model + feature list
 model = joblib.load("prognosis_model.pkl")
 features = joblib.load("features.pkl")
 
 app = Flask(__name__)
-CORS(app)   # <--- THIS enables CORS for Wix
 
+# ⭐ THIS IS THE IMPORTANT PART
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    data = request.json   # read json from request
+    data = request.json
 
-    # Put inputs in EXACT SAME ORDER as training
     row = [[data[f] for f in features]]
     df = pd.DataFrame(row, columns=features)
 
