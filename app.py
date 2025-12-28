@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import joblib
 import pandas as pd
 
@@ -7,6 +8,8 @@ model = joblib.load("prognosis_model.pkl")
 features = joblib.load("features.pkl")
 
 app = Flask(__name__)
+CORS(app)   # <--- THIS enables CORS for Wix
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
