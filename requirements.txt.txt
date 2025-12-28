@@ -1,5 +1,1 @@
-flask
-pandas
-scikit-learn
-joblib
-gunicorn
+
