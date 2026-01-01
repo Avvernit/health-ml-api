@@ -5,18 +5,15 @@ import pandas as pd
 
 app = Flask(__name__)
 
-# ⭐ This enables CORS for ALL routes and ALL headers
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-# Load model + features
 model = joblib.load("prognosis_model.pkl")
 features = joblib.load("features.pkl")
 
 
 @app.route("/predict", methods=["POST", "OPTIONS"])
 def predict():
-
-    # ⭐ Handle preflight request FIRST
+    
     if request.method == "OPTIONS":
         return jsonify({"status": "ok"}), 200
 
@@ -36,3 +33,4 @@ def predict():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
